@@ -1,0 +1,31 @@
+# SPDX-FileCopyrightText: 2026 Maestro authors and contributors
+# SPDX-FileContributor: Cedric Hirschi <cedr02@live.com>
+# SPDX-FileContributor: Tim Frey <timfreyb@gmail.com>
+#
+# SPDX-License-Identifier: Apache-2.0
+
+# Copy to maestro.local.yml for machine-specific overrides (gitignored).
+log:
+  level: DEBUG
+
+# Optional: override named executors or command bindings from maestro.yml.
+# List fields (e.g. binds) are replaced wholesale by deep-merge, not appended.
+#
+# executors:
+#   apptainer_exe:
+#     type: apptainer
+#     def_file: yocto
+#     workdir_host: yocto
+#     binds:
+#       - [/local/path/to/pack, /usr/pack, ro]
+#       - [cache, /cache, rw]
+#   yocto_exe: apptainer_exe
+#   vitis_exe: default
+#   hog_exe: vitis_exe
+#
+# commands:
+#   embgen:
+#     executor: default
+#   yocto: yocto_exe
+#   vitis:
+#     executor: vitis_exe

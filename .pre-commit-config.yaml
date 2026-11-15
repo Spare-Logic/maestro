@@ -1,0 +1,38 @@
+# SPDX-FileCopyrightText: 2026 Maestro authors and contributors
+# SPDX-FileContributor: Cedric Hirschi <cedr02@live.com>
+# SPDX-FileContributor: Tim Frey <timfreyb@gmail.com>
+#
+# SPDX-License-Identifier: Apache-2.0
+
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v5.0.0
+  hooks:
+  - id: check-added-large-files
+  - id: check-ast
+  - id: check-builtin-literals
+  - id: check-case-conflict
+  - id: check-illegal-windows-names
+  - id: check-json
+  - id: check-merge-conflict
+  - id: check-toml
+  - id: check-yaml
+  - id: end-of-file-fixer
+  - id: mixed-line-ending
+  - id: name-tests-test
+    args: [ --pytest-test-first ]
+  - id: trailing-whitespace
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  rev: v0.16.6
+  hooks:
+  - id: ruff-check
+    args: [ --fix ]
+  - id: ruff-format
+- repo: https://github.com/astral-sh/ty-pre-commit
+  rev: v0.0.79
+  hooks:
+  - id: ty
+- repo: https://github.com/fsfe/reuse-tool
+  rev: v6.2.0
+  hooks:
+  - id: reuse

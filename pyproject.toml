@@ -1,0 +1,74 @@
+# SPDX-FileCopyrightText: 2026 Maestro authors and contributors
+# SPDX-FileContributor: Cedric Hirschi <cedr02@live.com>
+# SPDX-FileContributor: Tim Frey <timfreyb@gmail.com>
+#
+# SPDX-License-Identifier: Apache-2.0
+
+[project]
+name = "maestro-tool"
+version = "0.1.0"
+description = "Orchestrator for full-stack embedded Linux workflows on AMD ZynqMP SoCs"
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSES/*.txt"]
+authors = [
+    { name = "Cedric Hirschi", email = "cedr02@live.com" },
+    { name = "Tim Frey", email = "timfreyb@gmail.com" },
+]
+requires-python = ">=3.11"
+dependencies = [
+    "isozap>=0.1.0",
+    "pyyaml>=6.0.0",
+    "rich>=15.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/Spare-Logic/maestro"
+Repository = "https://github.com/Spare-Logic/maestro"
+Documentation = "https://spare-logic.github.io/maestro/"
+Issues = "https://github.com/Spare-Logic/maestro/issues"
+
+[project.optional-dependencies]
+verible = [
+    "verible>=0.0.4071.0",
+]
+
+[dependency-groups]
+dev = [
+    "mkdocs>=1.6.1",
+    "mkdocs-material[imaging]>=9.7.7",
+    "mkdocstrings[python]>=1.0.6",
+    "prek>=0.5.2",
+    "pytest>=9.0.3",
+    "reuse>=6.2.0",
+    "ruff>=0.16.6",
+    "ty>=0.0.79",
+]
+
+[project.scripts]
+maestro = "maestro.cli:main"
+meastro = "maestro.cli:main"
+mao = "maestro.cli:main"
+
+[build-system]
+requires = ["uv_build<0.11"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "maestro"
+
+[tool.ruff]
+extend-exclude = ["src/maestro/assets/vitis"]
+format.preview = true
+
+[tool.ruff.lint]
+ignore = [
+    "DTZ005", # `datetime.datetime.now()` called without a `tz` argument
+    "BLE001", # Do not catch blind exception: `Exception`
+]
+
+[tool.ty.src]
+exclude = ["src/maestro/assets/vitis"]
+
+[tool.pytest]
+testpaths = ["tests"]

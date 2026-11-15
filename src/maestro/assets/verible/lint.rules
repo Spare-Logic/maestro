@@ -1,0 +1,8 @@
+# SPDX-FileCopyrightText: 2026 Maestro authors and contributors
+# SPDX-FileContributor: Cedric Hirschi <cedr02@live.com>
+# SPDX-FileContributor: Tim Frey <timfreyb@gmail.com>
+#
+# SPDX-License-Identifier: Apache-2.0
+
+# Allow localparam/parameter names like TEST_WIDTH (SCREAMING_SNAKE_CASE).
+parameter-name-style=localparam_style:ALL_CAPS;parameter_style:ALL_CAPS

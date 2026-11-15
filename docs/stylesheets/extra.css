@@ -1,0 +1,216 @@
+/*
+SPDX-FileCopyrightText: 2026 Maestro authors and contributors
+SPDX-FileContributor: Cedric Hirschi <cedr02@live.com>
+SPDX-FileContributor: Tim Frey <timfreyb@gmail.com>
+
+SPDX-License-Identifier: Apache-2.0
+*/
+
+/* VS Code Dark Modern / Light Modern look */
+[data-md-color-scheme="default"] {
+  --vs-bg: #ffffff;
+  --vs-sidebar: #f8f8f8;
+  --vs-raised: #e5e5e5;
+  --vs-hover: #f2f2f2;
+  --vs-select: #e8e8e8;
+  --vs-fg: #3b3b3b;
+  --vs-fg-strong: #1f1f1f;
+  --vs-muted: #616161;
+  --vs-rule: #e5e5e5;
+  --vs-accent: #005fb8;
+  --vs-link: #005fb8;
+  --vs-code-bg: #f0f0f0;
+}
+
+[data-md-color-scheme="slate"] {
+  --vs-bg: #1f1f1f;
+  --vs-sidebar: #181818;
+  --vs-raised: #2b2b2b;
+  --vs-hover: #2a2d2e;
+  --vs-select: #04395e;
+  --vs-fg: #cccccc;
+  --vs-fg-strong: #e7e7e7;
+  --vs-muted: #9d9d9d;
+  --vs-rule: #2b2b2b;
+  --vs-accent: #0078d4;
+  --vs-link: #4daafc;
+  --vs-code-bg: #2b2b2b;
+}
+
+[data-md-color-scheme="default"],
+[data-md-color-scheme="slate"] {
+  --md-default-bg-color: var(--vs-bg);
+  --md-default-fg-color: var(--vs-fg);
+  --md-default-fg-color--light: var(--vs-muted);
+  --md-default-fg-color--lighter: var(--vs-rule);
+  --md-default-fg-color--lightest: var(--vs-raised);
+  --md-primary-fg-color: var(--vs-sidebar);
+  --md-primary-fg-color--light: var(--vs-hover);
+  --md-primary-fg-color--dark: var(--vs-sidebar);
+  --md-primary-bg-color: var(--vs-fg-strong);
+  --md-primary-bg-color--light: var(--vs-muted);
+  --md-accent-fg-color: var(--vs-link);
+  --md-accent-fg-color--transparent: color-mix(in srgb, var(--vs-link) 14%, transparent);
+  --md-typeset-color: var(--vs-fg);
+  --md-typeset-a-color: var(--vs-link);
+  --md-code-bg-color: var(--vs-code-bg);
+  --md-code-fg-color: var(--vs-fg-strong);
+  --md-footer-bg-color: var(--vs-sidebar);
+  --md-footer-bg-color--dark: var(--vs-sidebar);
+  --md-footer-fg-color: var(--vs-fg);
+  --md-footer-fg-color--light: var(--vs-muted);
+  --md-footer-fg-color--lighter: var(--vs-muted);
+  --md-typeset-table-color: var(--vs-rule);
+  --md-admonition-bg-color: var(--vs-sidebar);
+  --md-text-font: "Segoe WPC", "Segoe UI", system-ui, "Ubuntu", "Droid Sans";
+  --md-code-font: "Cascadia Code", "Cascadia Mono", Consolas, "Courier New";
+}
+
+/* Header and tabs: title bar, separated by a hairline */
+.md-header,
+.md-tabs {
+  background: var(--vs-sidebar);
+  color: var(--vs-fg-strong);
+  box-shadow: none;
+}
+
+.md-header {
+  border-bottom: 1px solid var(--vs-rule);
+}
+
+.md-tabs {
+  border-bottom: 1px solid var(--vs-rule);
+}
+
+.md-tabs__link {
+  opacity: 1;
+  color: var(--vs-muted);
+}
+
+.md-tabs__item--active .md-tabs__link,
+.md-tabs__link:hover {
+  color: var(--vs-fg-strong);
+}
+
+/* Search box like a VS Code input */
+.md-search__input {
+  background: var(--vs-raised);
+  border: 1px solid var(--vs-rule);
+  border-radius: 4px;
+  color: var(--vs-fg);
+}
+
+.md-search__input:hover {
+  background: var(--vs-hover);
+}
+
+/* Side bars: Explorer-style list with a selection bar */
+.md-nav__link {
+  border-radius: 0;
+}
+
+.md-nav__link:hover {
+  color: var(--vs-fg-strong);
+}
+
+.md-nav--primary .md-nav__link--active {
+  color: var(--vs-fg-strong);
+  background: var(--vs-select);
+  box-shadow: inset 2px 0 0 var(--vs-accent);
+  padding-left: 0.4rem;
+  margin-left: -0.4rem;
+}
+
+.md-nav__title {
+  color: var(--vs-muted);
+}
+
+/* Typography */
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3 {
+  color: var(--vs-fg-strong);
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.md-typeset h1 {
+  font-size: 1.75rem;
+}
+
+.md-typeset a:hover {
+  text-decoration: underline;
+}
+
+/* Inline code and code blocks */
+.md-typeset code {
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+.md-typeset pre>code {
+  border-radius: 6px;
+}
+
+.md-typeset .highlight,
+.md-typeset pre {
+  border-radius: 6px;
+}
+
+.md-typeset pre {
+  border: 1px solid var(--vs-rule);
+}
+
+/* Tables, like the Problems panel */
+.md-typeset table:not([class]) {
+  border: 1px solid var(--vs-rule);
+  border-radius: 6px;
+  background: var(--vs-sidebar);
+  font-size: 0.65rem;
+  box-shadow: none;
+}
+
+.md-typeset table:not([class]) th {
+  background: var(--vs-sidebar);
+  color: var(--vs-muted);
+  font-size: 0.55rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.md-typeset table:not([class]) td {
+  border-top: 1px solid var(--vs-rule);
+}
+
+.md-typeset table:not([class]) tbody tr:hover {
+  background: var(--vs-hover);
+  box-shadow: none;
+}
+
+/* Admonitions: flat panels with a coloured edge */
+.md-typeset .admonition,
+.md-typeset details {
+  border: 1px solid var(--vs-rule);
+  border-left-width: 2px;
+  border-radius: 6px;
+  box-shadow: none;
+  font-size: 0.7rem;
+}
+
+/* Footer: status bar */
+.md-footer {
+  border-top: 1px solid var(--vs-rule);
+}
+
+.md-footer-meta {
+  background: var(--vs-sidebar);
+  font-size: 0.6rem;
+}
+
+.md-typeset :focus-visible,
+.md-nav__link:focus-visible {
+  outline: 1px solid var(--vs-accent);
+  outline-offset: 1px;
+}

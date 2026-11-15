@@ -1,0 +1,78 @@
+# SPDX-FileCopyrightText: 2026 Maestro authors and contributors
+# SPDX-FileContributor: Cedric Hirschi <cedr02@live.com>
+# SPDX-FileContributor: Tim Frey <timfreyb@gmail.com>
+#
+# SPDX-License-Identifier: Apache-2.0
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+  UV_CACHE_DIR: .uv-cache
+  HOG_IP_CACHE: .hog-ip-cache
+
+default:
+  image:
+    name: vitis_tools_user:2025.2
+    pull_policy: if-not-present # available: always, if-not-present
+    entrypoint: [""]
+  tags:
+    - docker
+  before_script:
+    - |
+      echo "
+      machine $CI_SERVER_HOST
+      login gitlab-ci-token
+      password $CI_JOB_TOKEN
+      " > ~/.netrc
+    - uv sync
+    - source .venv/bin/activate
+
+test:
+  script:
+    - pytest -v --junitxml=logs/report.xml
+  artifacts:
+    when: always
+    reports:
+      junit: logs/report.xml
+
+
+.projects: &projects
+  parallel:
+    matrix:
+      - PROJECT_NAME:
+          [
+            "project_a",
+            "project_b"
+          ]
+
+generate_project:
+  rules:
+    - if: '$CI_COMMIT_REF_NAME =~ /^(master|main|release).*$/  && $CI_PIPELINE_SOURCE == "push"'
+      when: always
+    - when: manual
+  <<: *projects
+  variables:
+    HOG_ONLY_SYNTH: 0  # if 1 runs only the synthesis
+    PROJECT: $PROJECT_NAME
+  environment: $PROJECT_NAME
+  cache:
+    - key: yocto
+      paths:
+        - yocto/build/sstate-cache
+        - yocto/build/downloads
+      policy: pull-push
+    - paths:
+        - $HOG_IP_CACHE
+      policy: pull-push
+  script:
+    - inv hog
+    - inv yocto
+    - inv publish
+  artifacts:
+    when: always
+    paths:
+      - "Hog/Tcl/*.log"
+      - "*.log"
+      - ".maestro/runs"
+      - bin
+    expire_in: 30 day
+  interruptible: true

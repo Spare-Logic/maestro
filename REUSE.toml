@@ -1,0 +1,30 @@
+# SPDX-FileCopyrightText: 2026 Maestro authors and contributors
+# SPDX-FileContributor: Cedric Hirschi <cedr02@live.com>
+# SPDX-FileContributor: Tim Frey <timfreyb@gmail.com>
+#
+# SPDX-License-Identifier: Apache-2.0
+
+version = 1
+
+# These files don't require a license header, so we ignore them in the lint checks by overwriting
+[[annotations]]
+path = [
+    "README.md",
+    "uv.lock",
+]
+precedence = "override"
+
+SPDX-FileCopyrightText = "2026 Maestro authors and contributors"
+SPDX-FileContributor = [
+    "Cedric Hirschi <cedr02@live.com>",
+    "Tim Frey <timfreyb@gmail.com>",
+]
+SPDX-License-Identifier = "Apache-2.0"
+
+[[annotations]]
+path = ["docs/figures/gitlab_ci_config.png"]
+precedence = "override"
+
+SPDX-FileCopyrightText = "2026 Maestro authors and contributors"
+SPDX-FileContributor = "Tim Frey <timfreyb@gmail.com>"
+SPDX-License-Identifier = "CC-BY-4.0"

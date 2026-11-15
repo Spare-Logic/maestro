@@ -1,0 +1,128 @@
+# SPDX-FileCopyrightText: 2026 Maestro authors and contributors
+# SPDX-FileContributor: Cedric Hirschi <cedr02@live.com>
+# SPDX-FileContributor: Tim Frey <timfreyb@gmail.com>
+#
+# SPDX-License-Identifier: Apache-2.0
+
+Bootstrap: docker
+From: ubuntu:24.04
+
+%post
+    set -eux
+
+    # Remove default ubuntu user created by Ubuntu 24.04 base image
+    touch /var/mail/ubuntu && chown ubuntu /var/mail/ubuntu && userdel -r ubuntu || true
+
+    export DEBIAN_FRONTEND=noninteractive
+
+    # Use bash as /bin/sh (required by Yocto)
+    echo "dash dash/sh boolean false" | debconf-set-selections
+    dpkg-reconfigure dash
+
+    # libtinfo5 is needed by Xilinx tools but not available in Ubuntu 24.04 repos
+    # Add Ubuntu 22.04 (jammy) universe repo
+    cat >/etc/apt/sources.list.d/jammy-universe.list <<'EOF'
+deb [arch=amd64] http://archive.ubuntu.com/ubuntu jammy universe
+deb [arch=amd64] http://security.ubuntu.com/ubuntu jammy-security universe
+deb [arch=amd64] http://archive.ubuntu.com/ubuntu jammy-updates universe
+EOF
+
+    # Pin libtinfo5 to jammy version
+    cat >/etc/apt/preferences.d/pin-jammy-libtinfo5 <<'EOF'
+Package: *
+Pin: release n=jammy
+Pin-Priority: -10
+
+Package: libtinfo5
+Pin: release n=jammy
+Pin-Priority: 990
+EOF
+
+    apt-get update && apt-get install -y \
+        locales-all \
+        locales \
+        tofrodos \
+        iproute2 \
+        gawk \
+        xvfb \
+        git \
+        make \
+        net-tools \
+        libncurses5-dev \
+        update-inetd \
+        tftpd-hpa \
+        zlib1g-dev \
+        libssl-dev \
+        flex \
+        bison \
+        libselinux1 \
+        gnupg \
+        wget \
+        diffstat \
+        chrpath \
+        socat \
+        xterm \
+        autoconf \
+        libtool \
+        libtool-bin \
+        unzip \
+        texinfo \
+        gcc-multilib \
+        build-essential \
+        libsdl1.2-dev \
+        libglib2.0-dev \
+        screen \
+        pax \
+        gzip \
+        python3-gi \
+        less \
+        lsb-release \
+        fakeroot \
+        libgtk2.0-0 \
+        libgtk2.0-dev \
+        cpio \
+        rsync \
+        xorg \
+        expect \
+        dos2unix \
+        bc \
+        zlib1g \
+        libusb-dev
+
+    wget http://archive.ubuntu.com/ubuntu/pool/main/t/tar/tar_1.34+dfsg-1build3_amd64.deb \
+        && dpkg -i tar_1.34+dfsg-1build3_amd64.deb \
+        && apt-mark hold tar \
+        && rm tar_1.34+dfsg-1build3_amd64.deb
+
+    apt-get install -y \
+        google-perftools \
+        default-jre
+
+    apt-get install -y \
+        gawk wget git diffstat unzip texinfo \
+        gcc build-essential chrpath socat cpio \
+        python3 python3-pip python3-pexpect xz-utils \
+        debianutils iputils-ping python3-git python3-jinja2 \
+        libegl1-mesa-dev libsdl1.2-dev xterm python3-subunit \
+        mesa-common-dev zstd liblz4-tool lz4 \
+        repo
+
+    apt-get install -y --no-install-recommends libtinfo5
+
+    # Set locale
+    env LANG=en_US.UTF-8 locale-gen --purge en_US.UTF-8
+    echo -e 'LANG="en_US.UTF-8"\nLANGUAGE="en_US:en"\n' > /etc/default/locale
+
+    apt-get clean
+
+%environment
+    export LANG=en_US.UTF-8
+    export LANGUAGE=en_US:en
+    export LC_ALL=en_US.UTF-8
+
+%labels
+    Description Yocto 5.0 / Xilinx 2025.2 build environment
+
+%help
+    Yocto build environment for Xilinx ZynqMP targets.
+    Use run_apptainer.sh to launch an interactive shell with the correct bind mounts.
